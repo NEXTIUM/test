@@ -2,10 +2,33 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; URL=https://fitopaeztienda.com/">
-    <title>Redireccionando...</title>
+    <title>Two Iframes</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        .iframe-container {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+        #iframe1 {
+            width: 0;
+        }
+        #iframe2 {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <p>Redireccionando a <a href="https://fitopaeztienda.com/">https://fitopaeztienda.com/</a></p>
+    <iframe id="iframe1" class="iframe-container" src="https://www.clarin.com" frameborder="0"></iframe>
+    <iframe id="iframe2" class="iframe-container" src="https://www.ole.com.ar" frameborder="0"></iframe>
 </body>
 </html>
