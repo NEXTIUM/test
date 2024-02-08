@@ -3,42 +3,35 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Responsive HTML</title>
+<title>Contenido adaptable con iframe</title>
 <style>
-/* Estilos generales para todas las pantallas */
+/* Estilos generales */
 body {
+  margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
 }
 
-/* Estilos específicos para dispositivos móviles */
-@media only screen and (max-width: 600px) {
-  body {
-    background-color: lightblue;
-  }
+/* Estilos para el iframe */
+iframe {
+  width: 100%;
+  height: 500px; /* Altura predeterminada */
+  border: none;
 }
 
-/* Estilos específicos para pantallas de escritorio */
-@media only screen and (min-width: 601px) {
-  body {
-    background-color: lightgreen;
+/* Media query para dispositivos móviles */
+@media only screen and (max-width: 600px) {
+  iframe {
+    height: 300px; /* Ajustar altura para dispositivos móviles */
   }
 }
 </style>
 </head>
 <body>
 
-<script>
-// JavaScript para detectar el tipo de dispositivo
-window.onload = function() {
-  if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    // Si se accede desde un dispositivo móvil
-    document.body.innerHTML += "<h1>Acceso desde dispositivo móvil</h1>";
-  } else {
-    // Si se accede desde un navegador web en una computadora de escritorio
-    document.body.innerHTML += "<h1>Acceso desde navegador web</h1>";
-  }
-};
-</script>
+<h1>Ejemplo de iframe adaptable</h1>
+
+<iframe src="https://www.novaprintgroup.com/" frameborder="0"></iframe>
 
 </body>
 </html>
