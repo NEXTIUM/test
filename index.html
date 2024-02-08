@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Two Iframes</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-        }
-        .iframe-container {
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            margin: 0;
-            padding: 0;
-        }
-        #iframe1 {
-            width: 0;
-        }
-        #iframe2 {
-            width: 100%;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive HTML</title>
+<style>
+/* Estilos generales para todas las pantallas */
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Estilos específicos para dispositivos móviles */
+@media only screen and (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+
+/* Estilos específicos para pantallas de escritorio */
+@media only screen and (min-width: 601px) {
+  body {
+    background-color: lightgreen;
+  }
+}
+</style>
 </head>
 <body>
-    <iframe id="iframe1" class="iframe-container" src="https://www.clarin.com" frameborder="0"></iframe>
-    <iframe id="iframe2" class="iframe-container" src="https://www.ole.com.ar" frameborder="0"></iframe>
+
+<script>
+// JavaScript para detectar el tipo de dispositivo
+window.onload = function() {
+  if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    // Si se accede desde un dispositivo móvil
+    document.body.innerHTML += "<h1>Acceso desde dispositivo móvil</h1>";
+  } else {
+    // Si se accede desde un navegador web en una computadora de escritorio
+    document.body.innerHTML += "<h1>Acceso desde navegador web</h1>";
+  }
+};
+</script>
+
 </body>
 </html>
