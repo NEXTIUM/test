@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contenido según dispositivo</title>
+    <style>
+        /* Estilos para dispositivos móviles */
+        @media only screen and (max-width: 600px) {
+            #web-content {
+                display: none; /* Ocultar contenido web en dispositivos móviles */
+            }
+        }
+        
+        /* Estilos para dispositivos web */
+        @media only screen and (min-width: 601px) {
+            #mobile-content {
+                display: none; /* Ocultar contenido móvil en dispositivos web */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Contenido para dispositivos web -->
+    <div id="web-content">
+        <iframe src="green.html" width="100%" height="500px" frameborder="0"></iframe>
+    </div>
+    
+    <!-- Contenido para dispositivos móviles -->
+    <div id="mobile-content">
+        <iframe src="blue.html" width="100%" height="500px" frameborder="0"></iframe>
+    </div>
+</body>
+</html>
