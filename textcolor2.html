@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iluminación al pasar el mouse</title>
+<style>
+  /* Estilos para el contenedor principal */
+  .container {
+    position: relative;
+    width: 400px;
+    height: auto;
+    background-color: black;
+    overflow: hidden; /* Evita que el texto sobresalga del contenedor */
+  }
+  /* Estilos para el texto */
+  .texto-cambiar-color {
+    color: black; /* Color del texto */
+    font-size: 400px; /* Tamaño del texto */
+    transition: color 0.3s ease; /* Transición suave para el color */
+    cursor: pointer; /* Cursor de puntero al pasar sobre el texto */
+    position: relative; /* Permite posicionar el elemento secundario de manera absoluta */
+    z-index: 1; /* Asegura que el texto esté encima del elemento secundario */
+  }
+  /* Estilos para el efecto de iluminación al pasar el mouse */
+  .efecto-iluminacion {
+    position: absolute; /* Posición absoluta en relación con el contenedor */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Alto completo */
+    background-color: rgba(0, 255, 0, 0.5); /* Color de iluminación (verde semitransparente) */
+    top: 0; /* Posicionamiento arriba */
+    left: -100%; /* Inicialmente fuera del contenedor */
+    transition: left 0.3s ease; /* Transición suave para el desplazamiento horizontal */
+    z-index: 0; /* Asegura que el efecto de iluminación esté detrás del texto */
+  }
+  /* Efecto de iluminación al pasar el mouse sobre el contenedor */
+  .container:hover .efecto-iluminacion {
+    left: 0; /* Desplazar el efecto de iluminación hacia la derecha */
+  }
+</style>
+</head>
+<body>
+
+<!-- Contenedor principal -->
+<div class="container">
+  <!-- Efecto de iluminación -->
+  <div class="efecto-iluminacion"></div>
+  <!-- Texto que cambiará de color -->
+  <p class="texto-cambiar-color">Texto</p>
+</div>
+
+</body>
+</html>
