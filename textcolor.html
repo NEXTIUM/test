@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cambio de color al pasar el mouse</title>
+<style>
+  /* Estilos para el texto */
+  .texto-cambiar-color {
+    color: black; /* Color inicial */
+    transition: color 0.3s ease; /* Transición suave */
+    cursor: pointer; /* Cursor de puntero al pasar sobre el texto */
+  }
+  /* Estilos para el texto al pasar el mouse */
+  .texto-cambiar-color:hover {
+    color: red; /* Nuevo color al pasar el mouse */
+  }
+</style>
+</head>
+<body>
+
+<!-- Texto que cambiará de color -->
+<p class="texto-cambiar-color">Pasa el mouse sobre este texto para cambiar su color.</p>
+
+</body>
+</html>
