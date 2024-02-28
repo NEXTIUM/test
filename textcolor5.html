@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Efecto de linterna al pasar el mouse</title>
+<style>
+  /* Estilos para el contenedor principal */
+  .container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden; /* Evita el desbordamiento del contenido */
+  }
+  /* Estilos para el texto */
+  .texto-cambiar-color {
+    color: black; /* Color del texto negro */
+    font-size: 15vw; /* Tamaño del texto (aproximadamente 15% del ancho de la ventana) */
+    line-height: 1; /* Espaciado de línea */
+    text-align: center; /* Centra el texto horizontalmente */
+    margin: 0; /* Elimina el margen predeterminado */
+    padding: calc(50vh - 7.5vw) 0; /* Alinea el texto verticalmente */
+    position: relative; /* Permite posicionar elementos secundarios de manera absoluta */
+    z-index: 2; /* Asegura que el texto esté encima del efecto de linterna */
+    pointer-events: none; /* No capturar eventos de ratón */
+    transition: color 0.3s ease; /* Transición suave para el cambio de color del texto */
+  }
+  /* Estilos para el efecto de linterna */
+  .linterna {
+    position: absolute; /* Posición absoluta en relación con el contenedor */
+    top: 0; /* Alinea arriba */
+    left: 0; /* Alinea izquierda */
+    width: 15%; /* Ancho del foco */
+    height: 15%; /* Alto del foco */
+    background-color: white; /* Color de la luz de la linterna */
+    border-radius: 50%; /* Forma circular */
+    opacity: 0; /* Inicialmente invisible */
+    transition: opacity 0.3s ease; /* Transición suave para la opacidad */
+    z-index: 1; /* Asegura que el efecto de linterna esté detrás del texto */
+    pointer-events: none; /* No capturar eventos de ratón */
+  }
+  /* Efecto de linterna al pasar el mouse sobre el contenedor */
+  .container:hover .linterna {
+    opacity: 1; /* Hacer visible el efecto de linterna */
+  }
+  /* Efecto de texto al pasar el mouse sobre el contenedor */
+  .container:hover .texto-cambiar-color {
+    color: white; /* Cambiar el color del texto a blanco */
+  }
+</style>
+</head>
+<body>
+
+<!-- Contenedor principal -->
+<div class="container">
+  <!-- Texto que cambiará de color -->
+  <p class="texto-cambiar-color">GUILLERMO</p>
+  <!-- Efecto de linterna -->
+  <div class="linterna"></div>
+</div>
+
+</body>
+</html>
