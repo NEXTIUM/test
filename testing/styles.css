@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: green; /* Fondo verde */
+}
+
+.container {
+    width: 480px;
+    height: 480px;
+    margin: 50px auto;
+    overflow: hidden;
+    position: relative;
+    background-color: black; /* Fondo negro */
+}
+
+.text-container {
+    position: absolute;
+    bottom: 0;
+}
+
+#scrolling-text {
+    margin: 0;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    line-height: 1.5;
+    animation: scroll 20s linear infinite; /* Velocidad de desplazamiento ajustable */
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
