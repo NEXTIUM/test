@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Efecto de linterna al pasar el mouse</title>
+<style>
+  /* Estilos para el contenedor principal */
+  .container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden; /* Evita el desbordamiento del contenido */
+  }
+  /* Estilos para el texto */
+  .texto-cambiar-color {
+    color: black; /* Color inicial del texto */
+    font-size: 15vw; /* Tamaño del texto (aproximadamente 15% del ancho de la ventana) */
+    line-height: 1; /* Espaciado de línea */
+    text-align: center; /* Centra el texto horizontalmente */
+    margin: 0; /* Elimina el margen predeterminado */
+    padding: calc(50vh - 7.5vw) 0; /* Alinea el texto verticalmente */
+    position: relative; /* Permite posicionar elementos secundarios de manera absoluta */
+    z-index: 2; /* Asegura que el texto esté encima del efecto de linterna */
+    pointer-events: none; /* No capturar eventos de ratón */
+  }
+  /* Estilos para la efecto de linterna */
+  .linterna {
+    position: absolute; /* Posición absoluta en relación con el contenedor */
+    top: 50%; /* Centrar verticalmente */
+    left: 50%; /* Centrar horizontalmente */
+    width: 50px; /* Ancho de la linterna */
+    height: 50px; /* Alto de la linterna */
+    background: radial-gradient(circle, transparent 10%, rgba(255, 255, 255, 0.6) 20%, rgba(255, 255, 255, 0.4) 30%, rgba(255, 255, 255, 0.2) 40%, rgba(255, 255, 255, 0) 50%); /* Gradiente radial blanco */
+    background-size: 400% 400%; /* Tamaño del fondo */
+    transform: translate(-50%, -50%); /* Centrar la linterna */
+    opacity: 0; /* Inicialmente invisible */
+    z-index: 1; /* Asegura que el efecto de linterna esté debajo del texto */
+    pointer-events: none; /* No capturar eventos de ratón */
+    animation: linternaMovimiento 2s infinite alternate; /* Animación para simular el movimiento de la linterna */
+  }
+  
+  /* Animación para simular el movimiento de la linterna */
+  @keyframes linternaMovimiento {
+    0% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Contenedor principal -->
+<div class="container">
+  <!-- Texto que cambiará de color -->
+  <p class="texto-cambiar-color">GUILLERMO</p>
+  <!-- Efecto de linterna -->
+  <div class="linterna"></div>
+</div>
+
+<script>
+  // Obtenemos los elementos del texto y la linterna
+  const texto = document.querySelector('.texto-cambiar-color');
+  const linterna = document.querySelector('.linterna');
+  const container = document.querySelector('.container');
+
+  // Evento para mostrar la linterna cuando el mouse entra en el área del texto
+  container.addEventListener('mousemove', function(e) {
+    const x = e.clientX;
+    const y = e.clientY;
+    const textRect = texto.getBoundingClientRect();
+
+    const offsetX = x - textRect.left;
+    const offsetY = y - textRect.top;
+
+    linterna.style.left = `${offsetX}px`;
+    linterna.style.top = `${offsetY}px`;
+    linterna.style.opacity = 1;
+  });
+
+  container.addEventListener('mouseleave', function() {
+    linterna.style.opacity = 0;
+  });
+</script>
+
+</body>
+</html>
