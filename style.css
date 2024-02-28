@@ -1,4 +1,6 @@
 body {
     font-family: Tahoma, Arial, sans-serif; /* Si Tahoma no está disponible, se utilizará Arial o una fuente sans-serif genérica */
-    font-size: 48px;
+    font-size: 12px;
+    font-weight: bold; /* Hace que todo el texto esté en negrita */
+    font-style: italic; /* Hace que todo el texto esté inclinado */
 }
