@@ -1,0 +1,8 @@
+body {
+    font-family: Tahoma, Arial, sans-serif; /* Si Tahoma no está disponible, se utilizará Arial o una fuente sans-serif genérica */
+}
+
+.hello-world p {
+    font-family: Tahoma, Arial, sans-serif;
+    font-size: 12px;
+}
