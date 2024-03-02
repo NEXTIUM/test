@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificador de Números</title>
+</head>
+<body>
+  <h1>Verificador de Números</h1>
+  <p>Introduce un número para verificar si está dentro de ciertos límites:</p>
+  <input type="number" id="numeroInput">
+  <button onclick="verificarNumero()">Verificar</button>
+  <p id="resultado"></p>
+
+  <script>
+    function verificarNumero() {
+      var numero = parseInt(document.getElementById("numeroInput").value);
+      if (numero >= 10 && numero <= 20) {
+        document.getElementById("resultado").textContent = "El número está entre 10 y 20. ¡Bien!";
+      } else {
+        document.getElementById("resultado").textContent = "El número está fuera del rango. ¡Mal!";
+      }
+    }
+  </script>
+</body>
+</html>
