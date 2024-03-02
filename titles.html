@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credits</title>
+<style>
+  body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    animation: creditsAnimation 60s linear infinite;
+  }
+  @keyframes creditsAnimation {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+  .title {
+    font-size: 48px;
+    margin-top: 100px;
+  }
+  .cast {
+    font-size: 24px;
+    margin-top: 50px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">The End</div>
+    <div class="cast">
+      <p>Starring:</p>
+      <ul>
+        <li>John Smith as John Doe</li>
+        <li>Jane Doe as Jane Smith</li>
+        <li>Michael Johnson as Michael Brown</li>
+        <li>Emily Williams as Emily Johnson</li>
+        <li>David Miller as David Wilson</li>
+        <li>Sarah Anderson as Sarah Davis</li>
+        <li>Robert Taylor as Robert Martinez</li>
+        <li>...and many more</li>
+      </ul>
+      <p>Directed by: <br>Christopher Johnson</p>
+      <p>Produced by: <br>Emma Thompson</p>
+      <p>Executive Producers: <br>Michael Williams, Samantha Clark</p>
+      <p>Screenplay by: <br>Andrew Lee</p>
+      <p>Cinematography by: <br>Olivia White</p>
+      <p>Music by: <br>Matthew Taylor</p>
+      <p>Edited by: <br>William Jackson</p>
+      <p>Production Design by: <br>Lucas Garcia</p>
+    </div>
+  </div>
+</body>
+</html>
