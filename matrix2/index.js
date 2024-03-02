@@ -38,4 +38,4 @@ const draw = () => {
     }
 };
 
-setInterval(draw, 30);
+setInterval(draw, 60);
