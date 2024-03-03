@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>App Web Simple</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    .container {
+        max-width: 400px;
+        margin: 50px auto;
+    }
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <label for="opcion">Selecciona una opción:</label>
+    <select id="opcion">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+    </select>
+    <br>
+    <label for="valor">Introduce un valor numérico:</label>
+    <input type="number" id="valor" min="0" step="1">
+    <br>
+    <button onclick="comprobar()">Comprobar</button>
+    <p id="resultado"></p>
+</div>
+
+<script>
+function comprobar() {
+    var opcion = document.getElementById("opcion").value;
+    var valor = parseInt(document.getElementById("valor").value);
+    var resultado = document.getElementById("resultado");
+
+    if (opcion === "A") {
+        if (valor >= 8 && valor <= 14) {
+            resultado.textContent = "¡Bien!";
+        } else {
+            resultado.textContent = "¡Mal!";
+        }
+    } else if (opcion === "B") {
+        if (valor >= 15 && valor <= 20) {
+            resultado.textContent = "¡Bien!";
+        } else {
+            resultado.textContent = "¡Mal!";
+        }
+    } else if (opcion === "C") {
+        if (valor >= 5 && valor <= 10) {
+            resultado.textContent = "¡Bien!";
+        } else {
+            resultado.textContent = "¡Mal!";
+        }
+    }
+}
+</script>
+
+</body>
+</html>
