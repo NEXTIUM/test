@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Estado</title>
+</head>
+<body>
+    <h2>Buscador de Estado</h2>
+    <label for="tracking-number">Ingrese el Tracking Number:</label>
+    <input type="text" id="tracking-number">
+    <button onclick="buscarEstado()">Buscar</button>
+    <p id="estado"></p>
+
+    <script>
+        async function buscarEstado() {
+            const trackingNumber = document.getElementById('tracking-number').value.trim(); // Eliminar espacios en blanco alrededor
+            console.log('Tracking Number ingresado:', trackingNumber);
+
+            const doc = await cargarTabla('table-csv-3.html');
+            if (doc === null) {
+                console.error('No se pudo cargar la tabla.');
+                return;
+            }
+
+            const tableRows = doc.querySelectorAll('#data-table tbody tr');
+            let estadoEncontrado = false;
+            tableRows.forEach(row => {
+                const cells = row.querySelectorAll('td');
+                const numeroSeguimiento = cells[0].textContent.trim(); // Eliminar espacios en blanco alrededor
+                console.log('Número de seguimiento en la tabla:', numeroSeguimiento);
+                const estado = cells[1].textContent.trim();
+                if (numeroSeguimiento === trackingNumber) {
+                    document.getElementById('estado').textContent = `El estado para el Tracking Number ${trackingNumber} es: ${estado}`;
+                    estadoEncontrado = true;
+                }
+            });
+            if (!estadoEncontrado) {
+                document.getElementById('estado').textContent = `No se encontró ningún estado para el Tracking Number ${trackingNumber}`;
+            }
+        }
+
+        async function cargarTabla(url) {
+            try {
+                const response = await fetch(url);
+                const data = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
+                return doc;
+            } catch (error) {
+                console.error('Error al cargar la tabla:', error);
+                return null;
+            }
+        }
+    </script>
+</body>
+</html>
