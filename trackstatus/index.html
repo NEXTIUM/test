@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Status</title>
+    <style>
+        /* Estilos CSS para mejorar la apariencia */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 200px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Buscador de Status</h2>
+    <input type="text" id="trackingNumberInput" placeholder="Ingrese el Tracking Number...">
+    <button onclick="searchStatus()">Buscar</button>
+
+    <script>
+        // Función para realizar la búsqueda y mostrar el resultado en un popup
+        function searchStatus() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("trackingNumberInput").value.toUpperCase();
+            table = document.getElementById("statusTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0]; // El primer <td> contiene el Tracking Number
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase() === input) {
+                        var status = tr[i].getElementsByTagName("td")[1].innerText; // El segundo <td> contiene el Status
+                        alert("El status para el Tracking Number " + input + " es: " + status);
+                        return;
+                    }
+                }       
+            }
+            alert("No se encontró ningún status para el Tracking Number ingresado.");
+        }
+    </script>
+</body>
+</html>
