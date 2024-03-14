@@ -8,18 +8,19 @@
 <body>
     <h2>Buscador de Estado por Tracking Number</h2>
     <input type="text" id="search-input" placeholder="Ingrese el Tracking Number">
+    <button id="search-button">Buscar</button>
     <p id="status-text"></p>
 
     <script>
         window.addEventListener('DOMContentLoaded', (event) => {
             const csvFilePath = 'datos-csv.csv';
+            let data = {};
 
             const loadCSVData = async () => {
                 try {
                     const response = await fetch(csvFilePath);
                     const csvData = await response.text();
                     const rows = csvData.split('\n');
-                    const data = {};
 
                     rows.forEach(row => {
                         const columns = row.split(',');
@@ -27,24 +28,29 @@
                             data[columns[0].trim()] = columns[1].trim();
                         }
                     });
-
-                    const searchTrackingNumber = () => {
-                        const input = document.getElementById('search-input');
-                        const trackingNumber = input.value.trim();
-                        const statusText = document.getElementById('status-text');
-
-                        if (data[trackingNumber]) {
-                            statusText.textContent = `Estado: ${data[trackingNumber]}`;
-                        } else {
-                            statusText.textContent = 'No se encontró ningún estado para el Tracking Number ingresado.';
-                        }
-                    };
-
-                    document.getElementById('search-input').addEventListener('keyup', searchTrackingNumber);
                 } catch (error) {
                     console.error('Error al cargar el archivo CSV:', error);
                 }
             };
+
+            const searchTrackingNumber = () => {
+                const input = document.getElementById('search-input');
+                const statusText = document.getElementById('status-text');
+                const trackingNumber = input.value.trim();
+
+                if (data[trackingNumber]) {
+                    statusText.textContent = `Estado: ${data[trackingNumber]}`;
+                } else {
+                    statusText.textContent = 'No se encontró ningún estado para el Tracking Number ingresado.';
+                }
+            };
+
+            document.getElementById('search-button').addEventListener('click', searchTrackingNumber);
+            document.getElementById('search-input').addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    searchTrackingNumber();
+                }
+            });
 
             loadCSVData();
         });
