@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control de Horas Trabajadas</title>
+    <style>
+        .dia-actual {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h1>Control de Horas Trabajadas</h1>
@@ -24,6 +29,7 @@
                     <th>Inicio de almuerzo</th>
                     <th>Fin de almuerzo</th>
                     <th>¿Trabajado?</th>
+                    <th>Marca de tiempo</th>
                 </tr>
             </thead>
             <tbody id="horasBody">
@@ -45,13 +51,15 @@
 
             // Generar filas para cada día del mes de marzo
             var fechaActual = new Date();
+            var diaActual = fechaActual.getDate(); // Obtener el día actual
             var diasEnMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0).getDate();
             var horasBody = $('#horasBody');
             for (var i = 1; i <= diasEnMes; i++) {
                 var fecha = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), i);
                 var diaSemana = obtenerNombreDia(fecha.getDay());
+                var claseDia = (i === diaActual) ? 'dia-actual' : ''; // Añadir la clase 'dia-actual' si es el día actual
                 horasBody.append(
-                    '<tr>' +
+                    '<tr class="' + claseDia + '">' +
                     '<td>' + i + '</td>' +
                     '<td>' + diaSemana + '</td>' +
                     '<td><input type="time" name="entrada' + i + '" required></td>' +
@@ -64,6 +72,7 @@
                     '<option value="no">No</option>' +
                     '</select>' +
                     '</td>' +
+                    '<td><input type="hidden" name="marcaTiempo' + i + '" value="' + Date.now() + '"></td>' +
                     '</tr>'
                 );
             }
@@ -81,6 +90,7 @@
                     formData['inicioAlmuerzo' + i] = $('input[name="inicioAlmuerzo' + i + '"]').val();
                     formData['finAlmuerzo' + i] = $('input[name="finAlmuerzo' + i + '"]').val();
                     formData['trabajado' + i] = $('select[name="trabajado' + i + '"]').val();
+                    formData['marcaTiempo' + i] = $('input[name="marcaTiempo' + i + '"]').val();
                 }
                 $.ajax({
                     type: 'POST',
