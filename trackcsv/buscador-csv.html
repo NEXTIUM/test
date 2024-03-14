@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Datos desde CSV</title>
+</head>
+<body>
+    <h2>Tabla de Datos desde CSV</h2>
+    <input type="text" id="search-input" placeholder="Buscar por Tracking Number">
+    <table id="data-table-2">
+        <thead>
+            <tr>
+                <th>Tracking Number</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Aquí se cargarán las filas de datos del CSV -->
+        </tbody>
+    </table>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const csvFilePath = 'datos-csv.csv';
+
+            const loadCSVData = async () => {
+                try {
+                    const response = await fetch(csvFilePath);
+                    const csvData = await response.text();
+                    const rows = csvData.split('\n');
+                    const tbody = document.querySelector('#data-table-2 tbody');
+
+                    rows.forEach(row => {
+                        const columns = row.split(',');
+                        if (columns.length === 2) {
+                            const tr = document.createElement('tr');
+                            columns.forEach(column => {
+                                const td = document.createElement('td');
+                                td.textContent = column.trim();
+                                tr.appendChild(td);
+                            });
+                            tbody.appendChild(tr);
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error al cargar el archivo CSV:', error);
+                }
+            };
+
+            const searchTrackingNumber = () => {
+                const input = document.getElementById('search-input');
+                const filter = input.value.toUpperCase();
+                const table = document.getElementById('data-table-2');
+                const tbody = table.querySelector('tbody');
+                const rows = tbody.querySelectorAll('tr');
+
+                rows.forEach(row => {
+                    const trackingNumber = row.cells[0].textContent.toUpperCase();
+                    if (trackingNumber.indexOf(filter) > -1) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            };
+
+            document.getElementById('search-input').addEventListener('keyup', searchTrackingNumber);
+
+            loadCSVData();
+        });
+    </script>
+</body>
+</html>
