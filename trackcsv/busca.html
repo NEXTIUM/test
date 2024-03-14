@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Estado por Tracking Number</title>
+</head>
+<body>
+    <h2>Buscador de Estado por Tracking Number</h2>
+    <input type="text" id="search-input" placeholder="Ingrese el Tracking Number">
+    <p id="status-text"></p>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const csvFilePath = 'datos-csv.csv';
+
+            const loadCSVData = async () => {
+                try {
+                    const response = await fetch(csvFilePath);
+                    const csvData = await response.text();
+                    const rows = csvData.split('\n');
+                    const data = {};
+
+                    rows.forEach(row => {
+                        const columns = row.split(',');
+                        if (columns.length === 2) {
+                            data[columns[0].trim()] = columns[1].trim();
+                        }
+                    });
+
+                    const searchTrackingNumber = () => {
+                        const input = document.getElementById('search-input');
+                        const trackingNumber = input.value.trim();
+                        const statusText = document.getElementById('status-text');
+
+                        if (data[trackingNumber]) {
+                            statusText.textContent = `Estado: ${data[trackingNumber]}`;
+                        } else {
+                            statusText.textContent = 'No se encontró ningún estado para el Tracking Number ingresado.';
+                        }
+                    };
+
+                    document.getElementById('search-input').addEventListener('keyup', searchTrackingNumber);
+                } catch (error) {
+                    console.error('Error al cargar el archivo CSV:', error);
+                }
+            };
+
+            loadCSVData();
+        });
+    </script>
+</body>
+</html>
