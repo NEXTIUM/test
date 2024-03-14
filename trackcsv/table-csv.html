@@ -15,17 +15,17 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Aquí se llenará la tabla con los datos del CSV -->
+            <!-- Los datos del CSV se llenarán aquí -->
         </tbody>
     </table>
 
     <script>
-        async function cargarTabla() {
+        async function cargarTablaDesdeCSV() {
             try {
                 const response = await fetch('datos.csv');
                 const data = await response.text();
                 const rows = data.split('\n');
-                const tableBody = document.querySelector('#data-table tbody');
+                const tableBody = document.querySelector('#data-table-2 tbody');
                 rows.forEach(row => {
                     const columns = row.split(',');
                     const trackingNumber = columns[0];
@@ -40,11 +40,11 @@
                     tableBody.appendChild(tr);
                 });
             } catch (error) {
-                console.error('Error al cargar la tabla:', error);
+                console.error('Error al cargar la tabla desde el CSV:', error);
             }
         }
 
-        cargarTabla();
+        cargarTablaDesdeCSV();
     </script>
 </body>
 </html>
