@@ -35,22 +35,31 @@
             <th>Tracking Number</th>
             <th>Status</th>
         </tr>
-        <tr>
-            <td>ABC123</td>
-            <td>Open</td>
-        </tr>
-        <tr>
-            <td>DEF456</td>
-            <td>Closed</td>
-        </tr>
-        <tr>
-            <td>GHI789</td>
-            <td>Open</td>
-        </tr>
-        <tr>
-            <td>JKL012</td>
-            <td>Delayed</td>
-        </tr>
     </table>
+
+    <script>
+        // Leer y procesar el archivo CSV cuando se carga la página
+        window.onload = function() {
+            fetch('datos.csv')
+            .then(response => response.text())
+            .then(data => {
+                const rows = data.split('\n');
+                rows.forEach(row => {
+                    const cols = row.split(',');
+                    const trackingNumber = cols[0];
+                    const status = cols[1];
+                    const table = document.getElementById('statusTable');
+                    const newRow = table.insertRow(-1);
+                    const cell1 = newRow.insertCell(0);
+                    const cell2 = newRow.insertCell(1);
+                    cell1.textContent = trackingNumber;
+                    cell2.textContent = status;
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar datos:', error);
+            });
+        };
+    </script>
 </body>
 </html>
