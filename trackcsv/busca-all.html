@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Datos desde CSV con Búsqueda</title>
+</head>
+<body>
+    <h2>Buscar Estado del Tracking Number</h2>
+    <input type="text" id="search-input" placeholder="Ingrese el Tracking Number">
+    <button id="search-button">Buscar</button>
+    <div id="status"></div>
+
+    <h2>Tabla de Datos desde CSV</h2>
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>Tracking Number</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', async () => {
+            const csvFilePath = 'datos-csv.csv';
+            const tableBody = document.querySelector('#data-table tbody');
+            const searchInput = document.querySelector('#search-input');
+            const searchButton = document.querySelector('#search-button');
+            const statusDisplay = document.querySelector('#status');
+
+            let csvData = [];
+
+            const loadCSVData = async () => {
+                try {
+                    const response = await fetch(csvFilePath);
+                    csvData = (await response.text()).split('\n');
+                    csvData.shift(); // Eliminar la primera fila (encabezados)
+
+                    csvData.forEach(row => {
+                        const columns = row.split(',');
+                        if (columns.length === 2) {
+                            const trackingNumber = columns[0].trim().toLowerCase(); // Convertir a minúsculas
+                            const status = columns[1].trim();
+                            const newRow = document.createElement('tr');
+                            newRow.innerHTML = `<td>${trackingNumber}</td><td>${status}</td>`;
+                            tableBody.appendChild(newRow);
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error al cargar el archivo CSV:', error);
+                }
+            };
+
+            const searchStatus = () => {
+                const searchTerm = searchInput.value.trim().toLowerCase(); // Convertir a minúsculas
+                const matchingRow = csvData.find(row => {
+                    const columns = row.split(',');
+                    const trackingNumber = columns[0].trim().toLowerCase(); // Convertir a minúsculas
+                    return trackingNumber === searchTerm;
+                });
+
+                if (matchingRow) {
+                    const status = matchingRow.split(',')[1].trim();
+                    statusDisplay.textContent = `Estado para el Tracking Number ${searchTerm.toUpperCase()}: ${status}`;
+                } else {
+                    statusDisplay.textContent = `No se encontró ningún estado para el Tracking Number ${searchTerm.toUpperCase()}.`;
+                }
+            };
+
+            searchButton.addEventListener('click', searchStatus);
+
+            await loadCSVData();
+        });
+    </script>
+</body>
+</html>
