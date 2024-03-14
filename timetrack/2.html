@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Horas Trabajadas</title>
+</head>
+<body>
+    <h1>Control de Horas Trabajadas</h1>
+    <form id="horasForm">
+        <label for="email">Correo electrónico:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="codigo">Código de validación:</label>
+        <input type="text" id="codigo" name="codigo" required><br><br>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Día</th>
+                    <th>Hora de entrada</th>
+                    <th>Hora de salida</th>
+                    <th>Inicio de almuerzo</th>
+                    <th>Fin de almuerzo</th>
+                </tr>
+            </thead>
+            <tbody id="horasBody">
+                <!-- Aquí se generará dinámicamente las filas de la tabla -->
+            </tbody>
+        </table>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Generar filas para cada día del mes de marzo
+            var fechaActual = new Date();
+            var diasEnMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0).getDate();
+            var horasBody = $('#horasBody');
+            for (var i = 1; i <= diasEnMes; i++) {
+                horasBody.append(
+                    '<tr>' +
+                    '<td>' + i + '</td>' +
+                    '<td><input type="time" name="entrada' + i + '" required></td>' +
+                    '<td><input type="time" name="salida' + i + '" required></td>' +
+                    '<td><input type="time" name="inicioAlmuerzo' + i + '" required></td>' +
+                    '<td><input type="time" name="finAlmuerzo' + i + '" required></td>' +
+                    '</tr>'
+                );
+            }
+
+            $('#horasForm').submit(function (event) {
+                event.preventDefault();
+                var formData = {
+                    email: $('#email').val(),
+                    codigo: $('#codigo').val(),
+                };
+                // Agregar horas de entrada, salida, inicio de almuerzo y fin de almuerzo al objeto formData
+                for (var i = 1; i <= diasEnMes; i++) {
+                    formData['entrada' + i] = $('input[name="entrada' + i + '"]').val();
+                    formData['salida' + i] = $('input[name="salida' + i + '"]').val();
+                    formData['inicioAlmuerzo' + i] = $('input[name="inicioAlmuerzo' + i + '"]').val();
+                    formData['finAlmuerzo' + i] = $('input[name="finAlmuerzo' + i + '"]').val();
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: 'URL_DE_TU_API_GATEWAY', // Reemplaza esto con la URL de tu API Gateway
+                    data: JSON.stringify(formData),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        alert('Horas registradas exitosamente');
+                        $('#horasForm')[0].reset();
+                    },
+                    error: function () {
+                        alert('Ocurrió un error al registrar las horas');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
