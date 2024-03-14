@@ -33,10 +33,14 @@
             const input = document.getElementById("trackingNumberInput").value.toUpperCase();
             try {
                 const response = await fetch('table.html');
+                console.log('Response:', response);
                 const html = await response.text();
+                console.log('HTML:', html);
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
+                console.log('Document:', doc);
                 const table = doc.getElementById('statusTable');
+                console.log('Table:', table);
                 const rows = table.getElementsByTagName('tr');
                 for (let i = 1; i < rows.length; i++) {
                     const row = rows[i];
