@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscador de Status</title>
+    <style>
+        /* Estilos CSS para mejorar la apariencia */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 200px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Buscador de Status</h2>
+    <input type="text" id="trackingNumberInput" placeholder="Ingrese el Tracking Number...">
+    <button onclick="searchStatus()">Buscar</button>
+
+    <script>
+        // Función para realizar la búsqueda y mostrar el resultado en un popup
+        async function searchStatus() {
+            const input = document.getElementById("trackingNumberInput").value.toUpperCase();
+            try {
+                const response = await fetch('table.html');
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                const table = doc.getElementById('statusTable');
+                const rows = table.getElementsByTagName('tr');
+                for (let i = 1; i < rows.length; i++) {
+                    const row = rows[i];
+                    const cols = row.getElementsByTagName('td');
+                    const trackingNumber = cols[0].innerText.toUpperCase();
+                    if (trackingNumber === input) {
+                        const status = cols[1].innerText;
+                        alert(`El status para el Tracking Number ${input} es: ${status}`);
+                        return;
+                    }
+                }
+                alert(`No se encontró ningún status para el Tracking Number ${input}`);
+            } catch (error) {
+                console.error('Error al buscar:', error);
+                alert('Hubo un error al buscar el Tracking Number.');
+            }
+        }
+    </script>
+</body>
+</html>
