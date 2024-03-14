@@ -15,36 +15,43 @@
             </tr>
         </thead>
         <tbody>
-            <!-- Los datos del CSV se llenarán aquí -->
+            <!-- Aquí se cargarán las filas de datos del CSV -->
         </tbody>
     </table>
 
     <script>
-        async function cargarTablaDesdeCSV() {
-            try {
-                const response = await fetch('datos.csv');
-                const data = await response.text();
-                const rows = data.split('\n');
-                const tableBody = document.querySelector('#data-table-2 tbody');
-                rows.forEach(row => {
-                    const columns = row.split(',');
-                    const trackingNumber = columns[0];
-                    const status = columns[1];
-                    const tr = document.createElement('tr');
-                    const tdTrackingNumber = document.createElement('td');
-                    const tdStatus = document.createElement('td');
-                    tdTrackingNumber.textContent = trackingNumber;
-                    tdStatus.textContent = status;
-                    tr.appendChild(tdTrackingNumber);
-                    tr.appendChild(tdStatus);
-                    tableBody.appendChild(tr);
-                });
-            } catch (error) {
-                console.error('Error al cargar la tabla desde el CSV:', error);
-            }
-        }
+        window.addEventListener('DOMContentLoaded', (event) => {
+            // URL del archivo CSV
+            const csvFilePath = 'datos-csv.csv';
 
-        cargarTablaDesdeCSV();
+            // Función para cargar y mostrar los datos del CSV en la tabla
+            const loadCSVData = async () => {
+                try {
+                    const response = await fetch(csvFilePath);
+                    const csvData = await response.text();
+                    const rows = csvData.split('\n');
+                    const tbody = document.querySelector('#data-table-2 tbody');
+
+                    rows.forEach(row => {
+                        const columns = row.split(',');
+                        if (columns.length === 2) {
+                            const tr = document.createElement('tr');
+                            columns.forEach(column => {
+                                const td = document.createElement('td');
+                                td.textContent = column.trim();
+                                tr.appendChild(td);
+                            });
+                            tbody.appendChild(tr);
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error al cargar el archivo CSV:', error);
+                }
+            };
+
+            // Llamar a la función para cargar los datos del CSV
+            loadCSVData();
+        });
     </script>
 </body>
 </html>
