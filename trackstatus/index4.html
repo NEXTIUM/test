@@ -20,6 +20,9 @@
             border: none;
             cursor: pointer;
         }
+        #searchResult {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -27,20 +30,19 @@
     <input type="text" id="trackingNumberInput" placeholder="Ingrese el Tracking Number...">
     <button onclick="searchStatus()">Buscar</button>
 
+    <!-- Elemento donde se mostrará el resultado de la búsqueda -->
+    <div id="searchResult"></div>
+
     <script>
-        // Función para realizar la búsqueda y mostrar el resultado en un popup
+        // Función para realizar la búsqueda y mostrar el resultado debajo del campo de búsqueda
         async function searchStatus() {
             const input = document.getElementById("trackingNumberInput").value.toUpperCase();
             try {
                 const response = await fetch('table.html');
-                console.log('Response:', response);
                 const html = await response.text();
-                console.log('HTML:', html);
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(html, 'text/html');
-                console.log('Document:', doc);
                 const table = doc.getElementById('statusTable');
-                console.log('Table:', table);
                 const rows = table.getElementsByTagName('tr');
                 for (let i = 1; i < rows.length; i++) {
                     const row = rows[i];
@@ -48,11 +50,13 @@
                     const trackingNumber = cols[0].innerText.toUpperCase();
                     if (trackingNumber === input) {
                         const status = cols[1].innerText;
-                        alert(`El status para el Tracking Number ${input} es: ${status}`);
+                        const searchResult = document.getElementById('searchResult');
+                        searchResult.innerHTML = `El status para el Tracking Number ${input} es: ${status}`;
                         return;
                     }
                 }
-                alert(`No se encontró ningún status para el Tracking Number ${input}`);
+                const searchResult = document.getElementById('searchResult');
+                searchResult.innerHTML = `No se encontró ningún status para el Tracking Number ${input}`;
             } catch (error) {
                 console.error('Error al buscar:', error);
                 alert('Hubo un error al buscar el Tracking Number.');
