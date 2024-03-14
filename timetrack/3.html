@@ -18,10 +18,12 @@
             <thead>
                 <tr>
                     <th>Día</th>
+                    <th>Día de la semana</th>
                     <th>Hora de entrada</th>
                     <th>Hora de salida</th>
                     <th>Inicio de almuerzo</th>
                     <th>Fin de almuerzo</th>
+                    <th>¿Trabajado?</th>
                 </tr>
             </thead>
             <tbody id="horasBody">
@@ -35,18 +37,33 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
+            // Función para obtener el nombre del día de la semana
+            function obtenerNombreDia(dia) {
+                var diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                return diasSemana[dia];
+            }
+
             // Generar filas para cada día del mes de marzo
             var fechaActual = new Date();
             var diasEnMes = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0).getDate();
             var horasBody = $('#horasBody');
             for (var i = 1; i <= diasEnMes; i++) {
+                var fecha = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), i);
+                var diaSemana = obtenerNombreDia(fecha.getDay());
                 horasBody.append(
                     '<tr>' +
                     '<td>' + i + '</td>' +
+                    '<td>' + diaSemana + '</td>' +
                     '<td><input type="time" name="entrada' + i + '" required></td>' +
                     '<td><input type="time" name="salida' + i + '" required></td>' +
                     '<td><input type="time" name="inicioAlmuerzo' + i + '" required></td>' +
                     '<td><input type="time" name="finAlmuerzo' + i + '" required></td>' +
+                    '<td>' +
+                    '<select name="trabajado' + i + '">' +
+                    '<option value="si">Sí</option>' +
+                    '<option value="no">No</option>' +
+                    '</select>' +
+                    '</td>' +
                     '</tr>'
                 );
             }
@@ -63,6 +80,7 @@
                     formData['salida' + i] = $('input[name="salida' + i + '"]').val();
                     formData['inicioAlmuerzo' + i] = $('input[name="inicioAlmuerzo' + i + '"]').val();
                     formData['finAlmuerzo' + i] = $('input[name="finAlmuerzo' + i + '"]').val();
+                    formData['trabajado' + i] = $('select[name="trabajado' + i + '"]').val();
                 }
                 $.ajax({
                     type: 'POST',
@@ -82,4 +100,3 @@
     </script>
 </body>
 </html>
-
