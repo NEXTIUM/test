@@ -14,12 +14,14 @@
 
     <script>
         function buscarEstado() {
-            const trackingNumber = document.getElementById('tracking-number').value;
+            const trackingNumber = document.getElementById('tracking-number').value.trim(); // Eliminar espacios en blanco alrededor
+            console.log('Tracking Number ingresado:', trackingNumber);
             const tableRows = document.querySelectorAll('#data-table tbody tr');
             let estadoEncontrado = false;
             tableRows.forEach(row => {
                 const cells = row.querySelectorAll('td');
-                const numeroSeguimiento = cells[0].textContent.trim();
+                const numeroSeguimiento = cells[0].textContent.trim(); // Eliminar espacios en blanco alrededor
+                console.log('Número de seguimiento en la tabla:', numeroSeguimiento);
                 const estado = cells[1].textContent.trim();
                 if (numeroSeguimiento === trackingNumber) {
                     document.getElementById('estado').textContent = `El estado para el Tracking Number ${trackingNumber} es: ${estado}`;
