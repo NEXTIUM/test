@@ -42,6 +42,8 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        var codigosValidos = ['482936', '759218', '631475', '894327', '216594', '378152', '945681', '523749', '867413', '149572'];
+
         $(document).ready(function () {
             // Función para obtener el nombre del día de la semana
             function obtenerNombreDia(dia) {
@@ -62,10 +64,10 @@
                     '<tr class="' + claseDia + '">' +
                     '<td>' + i + '</td>' +
                     '<td>' + diaSemana + '</td>' +
-                    '<td><input type="time" name="entrada' + i + '" required></td>' +
-                    '<td><input type="time" name="salida' + i + '" required></td>' +
-                    '<td><input type="time" name="inicioAlmuerzo' + i + '" required></td>' +
-                    '<td><input type="time" name="finAlmuerzo' + i + '" required></td>' +
+                    '<td><input type="time" name="entrada' + i + '"></td>' +
+                    '<td><input type="time" name="salida' + i + '"></td>' +
+                    '<td><input type="time" name="inicioAlmuerzo' + i + '"></td>' +
+                    '<td><input type="time" name="finAlmuerzo' + i + '"></td>' +
                     '<td>' +
                     '<select name="trabajado' + i + '">' +
                     '<option value="si">Sí</option>' +
@@ -79,9 +81,16 @@
 
             $('#horasForm').submit(function (event) {
                 event.preventDefault();
+                var email = $('#email').val();
+                var codigo = $('#codigo').val();
+                // Validar el código de verificación
+                if (!codigosValidos.includes(codigo)) {
+                    alert('Código de verificación incorrecto');
+                    return;
+                }
                 var formData = {
-                    email: $('#email').val(),
-                    codigo: $('#codigo').val(),
+                    email: email,
+                    codigo: codigo,
                 };
                 // Agregar horas de entrada, salida, inicio de almuerzo y fin de almuerzo al objeto formData
                 for (var i = 1; i <= diasEnMes; i++) {
