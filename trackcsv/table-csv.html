@@ -7,41 +7,37 @@
 </head>
 <body>
     <h2>Tabla de Datos desde CSV</h2>
-    <table id="data-table-2">
+    <table id="data-table">
         <thead>
             <tr>
                 <th>Tracking Number</th>
                 <th>Status</th>
             </tr>
         </thead>
-        <tbody>
-            <!-- Aquí se cargarán las filas de datos del CSV -->
-        </tbody>
+        <tbody></tbody>
     </table>
 
     <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            // URL del archivo CSV
+        window.addEventListener('DOMContentLoaded', async () => {
             const csvFilePath = 'datos-csv.csv';
+            const tableBody = document.querySelector('#data-table tbody');
 
-            // Función para cargar y mostrar los datos del CSV en la tabla
             const loadCSVData = async () => {
                 try {
                     const response = await fetch(csvFilePath);
                     const csvData = await response.text();
                     const rows = csvData.split('\n');
-                    const tbody = document.querySelector('#data-table-2 tbody');
+
+                    rows.shift(); // Eliminar la primera fila (encabezados)
 
                     rows.forEach(row => {
                         const columns = row.split(',');
                         if (columns.length === 2) {
-                            const tr = document.createElement('tr');
-                            columns.forEach(column => {
-                                const td = document.createElement('td');
-                                td.textContent = column.trim();
-                                tr.appendChild(td);
-                            });
-                            tbody.appendChild(tr);
+                            const trackingNumber = columns[0].trim();
+                            const status = columns[1].trim();
+                            const newRow = document.createElement('tr');
+                            newRow.innerHTML = `<td>${trackingNumber}</td><td>${status}</td>`;
+                            tableBody.appendChild(newRow);
                         }
                     });
                 } catch (error) {
@@ -49,8 +45,7 @@
                 }
             };
 
-            // Llamar a la función para cargar los datos del CSV
-            loadCSVData();
+            await loadCSVData();
         });
     </script>
 </body>
